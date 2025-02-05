@@ -253,7 +253,7 @@ private fun AccountsListPreview() {
             ),
             onPaginationReached = {},
             onAccountClicked = {},
-            onTryAgainClicked = 
+            onTryAgainClicked = {}
         )
     }
 }
