@@ -1,7 +1,7 @@
 package com.moravekvit.csastransparent.ui.screens.accountlist
 
 data class AccountListState(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean = true,
     val accountsList: List<AccountListItem> = listOf(),
     val filterText: String = "",
     val endReached: Boolean = false,

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -121,11 +122,11 @@ fun AccountsList(
 
     Surface(color = GeorgeBlue, modifier = modifier.fillMaxSize()) {
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .windowInsetsPadding(WindowInsets.safeContent)
+                .safeContentPadding()
         ) {
             Row(
-
                 verticalAlignment = Alignment.CenterVertically,
 
                 modifier = Modifier.padding(horizontal = 16.dp)
@@ -148,8 +149,7 @@ fun AccountsList(
                     },
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = 8.dp, start = 4.dp)
-                        .padding(8.dp)
+                        .padding(end = 8.dp)
                 )
 
                 Button(
@@ -189,6 +189,13 @@ fun AccountsList(
                         }
                     }
                 }
+            } else if (isLoading) {
+                LottieAnimation(
+                    composition,
+                    iterations = LottieConstants.IterateForever,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxWidth(0.4f)
+                )
             } else {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,

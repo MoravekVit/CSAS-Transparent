@@ -29,9 +29,9 @@ class AccountListViewModel @Inject constructor(
 
     private val paginator = DefaultPaginator(
         initialKey = _state.value.page,
-        onLoadUpdated = {
+        onLoadUpdated = { isUpdating ->
             _state.update {
-                it.copy(isLoading = true)
+                it.copy(isLoading = isUpdating)
             }
         },
         onRequest = { nextPage ->
