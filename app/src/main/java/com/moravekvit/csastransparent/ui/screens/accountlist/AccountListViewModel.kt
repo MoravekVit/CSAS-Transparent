@@ -22,7 +22,7 @@ class AccountListViewModel @Inject constructor(
     private val _state = MutableStateFlow(AccountListState())
     val state = _state.asStateFlow()
 
-    private val _event = Channel<AccountListEvent>()
+    private val _event = Channel<AccountListEvent>(Channel.BUFFERED)
     val event = _event.receiveAsFlow()
 
     private var confirmedFilter: String = ""
@@ -46,12 +46,14 @@ class AccountListViewModel @Inject constructor(
             }
         },
         onSuccess = { item, newKey ->
-            _state.update {
-                it.copy(
-                    accountsList = it.accountsList + accountListToAccountItemList(item.accounts),
-                    page = newKey,
-                    endReached = item.accounts.isEmpty()
-                )
+            item.accounts?.let {
+                _state.update {
+                    it.copy(
+                        accountsList = it.accountsList + accountListToAccountItemList(item.accounts),
+                        page = newKey,
+                        endReached = item.accounts.isEmpty()
+                    )
+                }
             }
         }
     )
@@ -86,24 +88,11 @@ class AccountListViewModel @Inject constructor(
     }
 
     private fun accountListToAccountItemList(accountsList: List<Account>): List<AccountListItem> {
-        val mappedList = mutableListOf<AccountListItem>()
-        accountsList.forEach {
-            mappedList.add(AccountListItem(it.name, it.accountNumber))
+        return accountsList.map {
+            AccountListItem(it.name, it.accountNumber)
         }
-        return mappedList
     }
 
 }
 
-data class AccountListState(
-    val isLoading: Boolean = false,
-    val accountsList: List<AccountListItem> = listOf(),
-    val filterText: String = "",
-    val endReached: Boolean = false,
-    val page: Int = 0
-)
 
-data class AccountListItem(
-    val name: String,
-    val accountNumber: String
-)

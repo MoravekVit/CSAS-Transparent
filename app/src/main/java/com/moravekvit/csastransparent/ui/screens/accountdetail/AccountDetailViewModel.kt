@@ -38,14 +38,12 @@ class AccountDetailViewModel @Inject constructor(
         }
         val accountNumber = args.accountNumber
         viewModelScope.launch {
-            try {
-                val response = repository.getAccountDetail(accountNumber)
-                if (response is Result.Success) {
-                    _state.update {
-                        it.copy(isLoading = false, account = response.data)
-                    }
+            val response = repository.getAccountDetail(accountNumber)
+            if (response is Result.Success) {
+                _state.update {
+                    it.copy(isLoading = false, account = response.data)
                 }
-            } catch (_: HttpException) {
+            } else {
                 _state.update {
                     it.copy(isLoading = false)
                 }

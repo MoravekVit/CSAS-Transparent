@@ -1,10 +1,9 @@
 package com.moravekvit.csastransparent.data.mappers
 
 import com.moravekvit.csastransparent.data.remote.dto.AccountDto
-import com.moravekvit.csastransparent.data.remote.dto.ListOfAccountsDto
+import com.moravekvit.csastransparent.data.remote.dto.PagingResponseDto
 import com.moravekvit.csastransparent.domain.Account
-import com.moravekvit.csastransparent.domain.ListOfAccounts
-import java.time.LocalDate
+import com.moravekvit.csastransparent.domain.PagingResponse
 import java.time.LocalDateTime
 
 fun AccountDto.toAccount(): Account {
@@ -25,21 +24,19 @@ fun AccountDto.toAccount(): Account {
     )
 }
 
-fun ListOfAccountsDto.toListOfAccounts(): ListOfAccounts {
-    return ListOfAccounts(
+fun PagingResponseDto.toListOfAccounts(): PagingResponse {
+    return PagingResponse(
         pageNumber = pageNumber,
         pageCount = pageCount,
         pageSize = pageSize,
         recordCount = recordCount,
         nextPage = nextPage,
-        accounts = accounts.toListOfAccounts()
+        accounts = accounts.toAccountList()
     )
 }
 
-fun List<AccountDto>?.toListOfAccounts(): List<Account> {
-    val mappedList = mutableListOf<Account>()
-    this?.forEach {
-        mappedList.add(it.toAccount())
+fun List<AccountDto>?.toAccountList(): List<Account>? {
+    return this?.map { dto ->
+        dto.toAccount()
     }
-    return mappedList
 }

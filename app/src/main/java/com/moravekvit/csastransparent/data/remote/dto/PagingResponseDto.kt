@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 
 
 @Serializable
-data class ListOfAccountsDto(
+data class PagingResponseDto(
     @SerialName("pageNumber")
     val pageNumber: Int,
     @SerialName("pageCount")

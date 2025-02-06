@@ -1,7 +1,7 @@
 package com.moravekvit.csastransparent.repository
 
 import com.moravekvit.csastransparent.domain.Account
-import com.moravekvit.csastransparent.domain.ListOfAccounts
+import com.moravekvit.csastransparent.domain.PagingResponse
 import com.moravekvit.csastransparent.domain.NetworkError
 import com.moravekvit.csastransparent.domain.Result
 
@@ -11,7 +11,7 @@ interface AccountsRepository {
         page: Int,
         size: Int,
         filter: String?
-    ): Result<ListOfAccounts, NetworkError>
+    ): Result<PagingResponse, NetworkError>
 
     suspend fun getAccountDetail(
         accountNumber: String
